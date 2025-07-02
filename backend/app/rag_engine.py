@@ -2,8 +2,10 @@ import os
 from pathlib import Path
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
+from langchain.prompts import PromptTemplate
+from langchain.chains import RetrievalQA
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,7 +17,8 @@ def load_and_embed_documents():
     docs = []
 
     for file in DATA_DIR.glob("*.txt"):
-        loader = TextLoader(str(file))
+        loader = TextLoader(str(file), encoding="utf-8", autodetect_encoding=True)
+
         docs.extend(loader.load())
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
@@ -28,14 +31,36 @@ def load_and_embed_documents():
     return vectorstore
 
 def ask_question(question: str) -> str:
+    embeddings = OpenAIEmbeddings()
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+
     if not FAISS_DIR.exists():
         vectorstore = load_and_embed_documents()
     else:
-        embeddings = OpenAIEmbeddings()
         vectorstore = FAISS.load_local(str(FAISS_DIR), embeddings)
 
     retriever = vectorstore.as_retriever()
-    docs = retriever.get_relevant_documents(question)
-    context = "\n".join(doc.page_content for doc in docs)
 
-    return f"Based on the documents:\n\n{context}\n\nAnswer: (This is where GPT would respond — coming next)"
+    prompt_template = """
+    Use the following context to answer the user's question.
+    If the answer cannot be found in the context, say "I couldn't find the answer in the provided documents."
+
+    Context:
+    {context}
+
+    Question:
+    {question}
+    """
+
+    prompt = PromptTemplate.from_template(prompt_template)
+
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        retriever=retriever,
+        chain_type="stuff",
+        chain_type_kwargs={"prompt": prompt},
+        return_source_documents=False,
+    )
+
+    result = qa_chain.run(question)
+    return result

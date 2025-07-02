@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.rag_engine import ask_question
+from app.rag_engine import ask_question, load_and_embed_documents
 
 app = FastAPI()
 
@@ -11,3 +11,8 @@ def read_root():
 def ask(question: str):
     answer = ask_question(question)
     return {"question": question, "answer": answer}
+
+@app.get("/reload")
+def reload_docs():
+    load_and_embed_documents()
+    return {"message": "Document vector store reloaded."}
