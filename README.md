@@ -6,6 +6,8 @@
 
 ## Overview
 
+## Overview
+
 `docwise` is a full-stack AI application that lets users upload `.txt` or `.md` documents, index them into a vector store using OpenAI embeddings, and query them using GPT-based natural language prompts. It's built with modern Python practices and will evolve into a production-grade developer portfolio project.
 
 ---
@@ -19,19 +21,20 @@
 | LLM          | OpenAI GPT (via API)          |
 | Embeddings   | OpenAI `text-embedding-ada-002` |
 | Vector DB    | FAISS (local)                 |
-| Frontend     | (Coming soon) Vite + Tailwind |
+| CLI Tool     | Python-based                  |
 | Dev Features | dotenv, logging, modular code |
 
 ---
 
 ## Features
 
-- Upload `.txt` or `.md` documents
-- Split, embed, and store content in FAISS
-- Ask natural language questions over your docs
-- GPT-powered answers grounded in document context
-- Modular and testable FastAPI backend
-- (Planned) Modern frontend with Vite + Tailwind CSS
+- Load `.txt`, `.md`, `.pdf`, `.json`, `.docx` documents
+- Extract and clean usable text before embedding
+- Chunk and embed with OpenAI embeddings
+- Query with GPT-3.5 using top matching content
+- Optional fallback if no match is found
+- Includes `/reload` API and CLI tool for asking questions
+- Fully backend-ready for integration or further development
 
 ---
 
@@ -52,7 +55,7 @@ source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
-### 3. Add your API key
+### 3. Add your OpenAI API key
 
 Create a `.env` file inside `/backend`:
 
@@ -60,13 +63,46 @@ Create a `.env` file inside `/backend`:
 OPENAI_API_KEY=your-openai-key-here
 ```
 
-### 4. Run the App
+### 4. Add Documents
+
+Place your files into `backend/data/` — supported formats:
+- `.txt`, `.md`, `.pdf`, `.json`, `.docx`
+
+Each document will be cleaned and converted to plain text.
+
+---
+
+## How to Use
+
+### Option A — Run API Server
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Then visit: [http://localhost:8000](http://localhost:8000)
+Then visit:
+
+- [http://localhost:8000/](http://localhost:8000) — health check
+- [http://localhost:8000/reload](http://localhost:8000/reload) — re-index documents
+- [http://localhost:8000/ask?question=your+question](http://localhost:8000/ask?question=your+question) — ask a question
+
+---
+
+### Option B — Run CLI
+
+```bash
+python cli.py
+```
+
+You'll enter an interactive session:
+
+```text
+📄 Welcome to docwise CLI — Ask your documents anything.
+Type 'exit' to quit.
+
+🧠 You: What is the PromptPilot Agent?
+🤖 GPT: The PromptPilot Agent is...
+```
 
 ---
 
@@ -80,12 +116,13 @@ docwise/
 │   │   ├── rag_engine.py
 │   │   ├── config.py
 │   │   └── utils.py
-│   ├── data/
-│   ├── faiss_index/
+│   ├── data/                # drop your docs here
+│   ├── faiss_index/         # auto-generated vector DB
+│   ├── cli.py               # CLI entry point
 │   ├── .env
 │   ├── requirements.txt
 │   └── .gitignore
-├── frontend/              # Coming soon
+├── frontend/                # Coming soon
 └── README.md
 ```
 
@@ -94,11 +131,11 @@ docwise/
 ## Status
 
 - [x] Project scaffolding
-- [x] Document loading and chunking
+- [x] Document loading + cleaning
 - [x] Embedding + FAISS index
-- [x] Question-answering route (FastAPI)
-- [ ] GPT-powered answer generation
-- [ ] Minimal CLI / test interface
+- [x] GPT-powered answer generation
+- [x] CLI interface
+- [x] Reloadable `/reload` endpoint
 - [ ] Frontend (Vite + Tailwind)
 
 ---
@@ -110,3 +147,4 @@ docwise/
 ## Timeline
 
 - Created: July 2, 2025
+
