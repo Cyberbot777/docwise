@@ -28,7 +28,7 @@
 
 ## Features
 
-- Load `.txt`, `.md`, `.pdf`, `.json`, `.docx` documents
+- Load `.txt`, `.md`, (coming soon `.pdf`, `.json`, `.docx`) documents
 - Extract and clean usable text before embedding
 - Chunk and embed with OpenAI embeddings
 - Query with GPT-3.5 using top matching content
@@ -66,7 +66,7 @@ OPENAI_API_KEY=your-openai-key-here
 ### 4. Add Documents
 
 Place your files into `backend/data/` — supported formats:
-- `.txt`, `.md`, `.pdf`, `.json`, `.docx`
+- `.txt`, `.md`, (coming soon`.pdf`, `.json`, `.docx`)
 
 Each document will be cleaned and converted to plain text.
 
