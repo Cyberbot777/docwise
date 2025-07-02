@@ -75,15 +75,15 @@ def load_and_embed_documents():
                 docx = DocxReader(str(file))
                 text = "\n".join(p.text for p in docx.paragraphs)
                 if len(text.strip()) < 50:
-                    print(f"⚠️ Skipping {file.name} — too little content.")
+                    print(f"Skipping {file.name} — too little content.")
                     continue
                 docs.append(Document(page_content=clean_text(text), metadata={"source": file.name}))
 
             else:
-                print(f"⚠️ Unsupported file type: {file.name}")
+                print(f"Unsupported file type: {file.name}")
 
         except Exception as e:
-            print(f"❌ Failed to load {file.name}: {e}")
+            print(f"Failed to load {file.name}: {e}")
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     chunks = splitter.split_documents(docs)
