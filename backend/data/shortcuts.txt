@@ -1,0 +1,54 @@
+Goal: Open your .bashrc file in Git Bash
+
+This file is in your home directory, and it holds custom settings — like the aliases we’re adding.
+Step-by-Step Instructions
+
+    Make sure you are in your Git Bash terminal.
+
+    You should see something like:
+
+    cyber@Cyber MINGW64 ~
+
+    That ~ means you are in your home folder, which is perfect.
+
+    Type this command to open .bashrc:
+
+    nano .bashrc
+
+        nano is a built-in terminal text editor.
+
+        .bashrc is the name of the file we want to edit.
+
+    If it works, you’ll see a text editor open up in the terminal window.
+
+    If that worked, you’re now in the editor.
+
+    Use your arrow keys to go down to the bottom of the file, and then add this line:
+
+    alias codefolder='cd /c/Users/cyber/OneDrive/Desktop/code'
+
+    Now save the file:
+
+        Press Ctrl + X (this starts the exit).
+
+        Press Y (this means “yes, save changes”).
+
+        Press Enter (to confirm the filename and save).
+
+    Apply the change by running:
+
+    source .bashrc
+
+    This reloads the file so your alias works right away.
+
+    Now test your new alias:
+
+codefolder
+
+That should instantly take you into your code folder!
+
+
+
+
+
+

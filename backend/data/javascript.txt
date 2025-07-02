@@ -1,0 +1,1 @@
+JavaScript is a versatile language primarily used for creating interactive elements on websites. It can run in browsers and on servers using Node.js.

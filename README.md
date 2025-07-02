@@ -41,7 +41,7 @@
 
 ```bash
 git clone https://github.com/your-username/docwise.git
-cd docwise
+cd docwise/backend
 ```
 
 ### 2. Set up your environment
@@ -54,7 +54,7 @@ pip install -r requirements.txt
 
 ### 3. Add your API key
 
-Create a `.env` file in the root:
+Create a `.env` file inside `/backend`:
 
 ```env
 OPENAI_API_KEY=your-openai-key-here
@@ -74,28 +74,30 @@ Then visit: [http://localhost:8000](http://localhost:8000)
 
 ```
 docwise/
-├── app/
-│   ├── main.py
-│   ├── rag_engine.py
-│   ├── config.py
-│   └── utils.py
-├── data/
-│   └── example.txt
-├── faiss_index/
-├── .env
-├── requirements.txt
-├── README.md
-└── .gitignore
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── rag_engine.py
+│   │   ├── config.py
+│   │   └── utils.py
+│   ├── data/
+│   ├── faiss_index/
+│   ├── .env
+│   ├── requirements.txt
+│   └── .gitignore
+├── frontend/              # Coming soon
+└── README.md
 ```
 
 ---
 
 ## Status
 
-- [ ] Project scaffolding
-- [ ] Document loading and chunking
-- [ ] Embedding + FAISS index
-- [ ] Question-answering route (FastAPI)
+- [x] Project scaffolding
+- [x] Document loading and chunking
+- [x] Embedding + FAISS index
+- [x] Question-answering route (FastAPI)
+- [ ] GPT-powered answer generation
 - [ ] Minimal CLI / test interface
 - [ ] Frontend (Vite + Tailwind)
 
@@ -107,4 +109,4 @@ docwise/
 
 ## Timeline
 
-- Created: July 2, 2025  
+- Created: July 2, 2025

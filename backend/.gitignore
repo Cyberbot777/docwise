@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# FAISS or vector storage
+faiss_index/
+
+# VSCode / system files
+.vscode/
+.DS_Store
