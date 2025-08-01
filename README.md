@@ -6,8 +6,6 @@
 
 ## Overview
 
-## Overview
-
 `docwise` is a full-stack AI application that lets users upload `.txt` or `.md` documents, index them into a vector store using OpenAI embeddings, and query them using GPT-based natural language prompts. It's built with modern Python practices and will evolve into a production-grade developer portfolio project.
 
 ---
@@ -143,8 +141,3 @@ docwise/
 ## Author
 
 - Richard Hall
-
-## Timeline
-
-- Created: July 2, 2025
-
